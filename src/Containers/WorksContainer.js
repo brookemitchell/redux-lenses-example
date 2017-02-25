@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
-import {setState} from '../redux/modules/state'
+import {getWorks} from '../redux/modules/state'
 
 
 class Works extends Component {
@@ -16,6 +16,6 @@ class Works extends Component {
 }
 
 const mapStateToProps =  state => {}
-const mapDispatchToProps = {setState, getWorks }
+const mapDispatchToProps = {getWorks }
 
 export default connect(null, mapDispatchToProps)(Works)

@@ -1,5 +1,6 @@
-const SET_STATE = "SET_STATE";
-const GET_WORKS = "GET_WORKS";
+export const GET_WORKS = "GET_WORKS";
+export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED"
+export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED"
 
 const appState = {
   loading: "loading",
@@ -16,8 +17,6 @@ const initialState = { appState: appState["none"] };
 
 export default function works(state = initialState, action) {
   switch (action.type) {
-    case SET_STATE:
-      return {...state, appState: action.state};
 
     case GET_WORKS:
         return {
