@@ -13,7 +13,13 @@ export const getWorks = () => ({
   type: GET_WORKS,
 });
 
-const initialState = { appState: appState["none"] };
+const initialState = {
+
+  appState: appState["none"],
+  error: '',
+  works: {}
+
+                     };
 
 export default function works(state = initialState, action) {
   switch (action.type) {
@@ -24,6 +30,23 @@ export default function works(state = initialState, action) {
         appState: appState['loading']
       };
 
+  case WORKS_FETCH_FAILED : {
+    return {
+      ...state,
+      appState: appState['error'],
+      error: action.message
+
+    };
+  }
+
+  case WORKS_FETCH_SUCCEEDED : {
+    return {
+      ...state,
+      appState: appState['info'],
+      error: '',
+      works: action.works,
+    };
+  }
     default:
       return state;
   }
