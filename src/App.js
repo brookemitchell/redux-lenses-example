@@ -18,7 +18,6 @@ class App extends Component {
     return (
       <div className='App'>
         <Provider store={store} >
-            {/* <pre> {JSON.stringify(store)} </pre> */}
           <Works />
         </Provider>
       </div>

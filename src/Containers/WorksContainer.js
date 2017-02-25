@@ -5,9 +5,7 @@ import {setState} from '../redux/modules/state'
 
 class Works extends Component {
   componentDidMount () {
-
-    this.props.setState('loading')
-
+    this.props.getWorks()
   }
 
   render () {
@@ -18,6 +16,6 @@ class Works extends Component {
 }
 
 const mapStateToProps =  state => {}
-const mapDispatchToProps = {setState}
+const mapDispatchToProps = {setState, getWorks }
 
 export default connect(null, mapDispatchToProps)(Works)
