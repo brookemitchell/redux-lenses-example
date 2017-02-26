@@ -6,7 +6,6 @@ import axios from 'axios'
 function* fetchUser(action) {
   try {
     const works = yield call(axios.get, 'http://localhost:9000/works');
-    console.log(works);
     yield put({type: "WORKS_FETCH_SUCCEEDED", works: works.data});
   } catch (e) {
     yield put({type: "WORKS_FETCH_FAILED", message: e.message});
