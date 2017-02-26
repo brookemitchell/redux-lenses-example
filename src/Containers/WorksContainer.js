@@ -26,17 +26,25 @@ class Works extends Component {
 
     const cellCreator = key => props => {
       const index = props.rowIndex;
+      const entry = entries[index];
+      const editing = entry.id == this.props.editing[0] &&
+        key === this.props.editing[1];
+
       return (
         <Cell {...props}>
-
-          {/* <input type="text" value={entries[props.rowIndex][key]} /> */}
-          <div
-            onDoubleClick={this.handleEditClick}
+          {editing
+          ? <textarea
+                onBlur={(...a) => console.log(a)}
+                onChange={(ev) => console.log(ev.target.value)}
+                style={{width:150, height:100}}
+                value={entry[key]} />
+            : <div onDoubleClick={this.handleEditClick}
             className={`${entries[index]["id"]} ${key}`}
             style={{ overflow: "auto" }}
-          >
-            {entries[index][key]}
+            >
+            {entry[key]}
           </div>
+          }
 
         </Cell>
       );
@@ -55,12 +63,11 @@ class Works extends Component {
 
     const desc = R.compose(
       R.mapObjIndexed(infoCol),
-      R.omit(["geometry", "code"])
+      R.omit(["geometry", "code", "name"])
     )(entries[0]);
 
     return (
       <Table
-        /* onRowDoubleClick={(...args) => console.log(args)}*/
         rowsCount={entries.length}
         rowHeight={130}
         width={window.innerWidth}
@@ -73,9 +80,12 @@ class Works extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  works: state.works.works
-});
+const mapStateToProps = state => {
+  return {
+    works: state.works.works,
+    editing: R.propOr([], 0, R.toPairs(state.works.editing))
+  };
+};
 
 const mapDispatchToProps = { getWorks, setEditing };
 
