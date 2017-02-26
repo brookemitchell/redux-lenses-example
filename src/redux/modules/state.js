@@ -1,6 +1,7 @@
 export const GET_WORKS = "GET_WORKS";
 export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED";
 export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED";
+const SET_EDITING = "SET_EDITING"
 
 const appState = {
   loading: "loading",
@@ -13,10 +14,16 @@ export const getWorks = () => ({
   type: GET_WORKS
 });
 
+export const setEditing = (editing) => ({
+  type: SET_EDITING,
+  editing,
+});
+
 const initialState = {
   appState: appState["none"],
   error: "",
-  works: {}
+  works: {},
+  editing: {}
 };
 
 export default function works(state = initialState, action) {
@@ -41,6 +48,13 @@ export default function works(state = initialState, action) {
         appState: appState["info"],
         error: "",
         works: action.works
+      };
+    }
+
+    case SET_EDITING: {
+      return {
+        ...state,
+        editing: action.editing,
       };
     }
     default:
