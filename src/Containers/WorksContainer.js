@@ -10,6 +10,8 @@ class Works extends Component {
   constructor() {
     super();
     this.handleEditClick = this.handleEditClick.bind(this);
+    this.handleTextChange = this.handleTextChange.bind(this);
+    this.handleTextSave = this.handleTextSave.bind(this);
   }
 
   componentDidMount() {
@@ -21,6 +23,16 @@ class Works extends Component {
     this.props.setEditing({ [id]: key });
   }
 
+  handleTextChange({target}) {
+    console.log(target);
+
+  }
+
+  handleTextSave({target}) {
+    console.log(target);
+
+  }
+
   render() {
     const entries = Object.values(this.props.works);
 
@@ -30,21 +42,25 @@ class Works extends Component {
       const editing = entry.id == this.props.editing[0] &&
         key === this.props.editing[1];
 
+      const entryDetails = `${entries[index]["id"]} ${key}`;
+
       return (
         <Cell {...props}>
           {editing
-          ? <textarea
-                onBlur={(...a) => console.log(a)}
-                onChange={(ev) => console.log(ev.target.value)}
-                style={{width:150, height:100}}
-                value={entry[key]} />
-            : <div onDoubleClick={this.handleEditClick}
-            className={`${entries[index]["id"]} ${key}`}
-            style={{ overflow: "auto" }}
-            >
-            {entry[key]}
-          </div>
-          }
+            ? <textarea
+                className={entryDetails}
+                onChange={this.handleTextChange}
+                onBlur={this.handleTextSave}
+                style={{ width: 150, height: 100 }}
+                value={entry[key]}
+              />
+            : <div
+                onDoubleClick={this.handleEditClick}
+                className={entryDetails}
+                style={{ overflow: "auto" }}
+              >
+                {entry[key]}
+              </div>}
 
         </Cell>
       );

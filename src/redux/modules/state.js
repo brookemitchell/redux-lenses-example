@@ -2,6 +2,7 @@ export const GET_WORKS = "GET_WORKS";
 export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED";
 export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED";
 const SET_EDITING = "SET_EDITING"
+const SET_TEXT = "SET_TEXT"
 
 const appState = {
   loading: "loading",
@@ -17,6 +18,11 @@ export const getWorks = () => ({
 export const setEditing = (editing) => ({
   type: SET_EDITING,
   editing,
+});
+
+export const setText = (changedEntry) => ({
+  type: SET_EDITING,
+  changedEntry,
 });
 
 const initialState = {
@@ -55,6 +61,11 @@ export default function works(state = initialState, action) {
       return {
         ...state,
         editing: action.editing,
+      };
+    }
+    case SET_TEXT: {
+      return {
+        ...state,
       };
     }
     default:
