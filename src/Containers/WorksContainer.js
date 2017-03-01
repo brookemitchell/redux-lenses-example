@@ -1,7 +1,7 @@
 import R from "ramda";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getWorks, setEditing } from "../redux/modules/state";
+import { getWorks, setEditing, setText } from "../redux/modules/state";
 import { Table, Column, Cell } from "fixed-data-table";
 import { titleCase } from "change-case";
 import "../../node_modules/fixed-data-table/dist/fixed-data-table.css";
@@ -23,14 +23,19 @@ class Works extends Component {
     this.props.setEditing({ [id]: key });
   }
 
-  handleTextChange({target}) {
-    console.log(target);
-
+  handleTextChange({ target }) {
+    const [id, key] = target.className.split(" ");
+    const newObjVals = {
+      id,
+      [id]: {
+        [key]: target.value
+      }
+    };
+    this.props.setText(newObjVals);
   }
 
-  handleTextSave({target}) {
-    console.log(target);
-
+  handleTextSave({ target }) {
+    this.props.setEditing({});
   }
 
   render() {
@@ -103,6 +108,6 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = { getWorks, setEditing };
+const mapDispatchToProps = { getWorks, setEditing, setText };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Works);

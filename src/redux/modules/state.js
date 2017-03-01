@@ -1,8 +1,8 @@
 export const GET_WORKS = "GET_WORKS";
 export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED";
 export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED";
-const SET_EDITING = "SET_EDITING"
-const SET_TEXT = "SET_TEXT"
+const SET_EDITING = "SET_EDITING";
+const SET_TEXT = "SET_TEXT";
 
 const appState = {
   loading: "loading",
@@ -15,14 +15,14 @@ export const getWorks = () => ({
   type: GET_WORKS
 });
 
-export const setEditing = (editing) => ({
+export const setEditing = editing => ({
   type: SET_EDITING,
-  editing,
+  editing
 });
 
-export const setText = (changedEntry) => ({
-  type: SET_EDITING,
-  changedEntry,
+export const setText = changedEntry => ({
+  type: SET_TEXT,
+  changedEntry
 });
 
 const initialState = {
@@ -60,12 +60,26 @@ export default function works(state = initialState, action) {
     case SET_EDITING: {
       return {
         ...state,
-        editing: action.editing,
+        editing: action.editing
       };
     }
     case SET_TEXT: {
+      const oldItem = state.works[action.changedEntry.id];
+      const newItem = action.changedEntry[action.changedEntry.id];
+
+      const mergedEntry = {
+        works: {
+          ...state.works,
+          [action.changedEntry.id]: {
+            ...oldItem,
+            ...newItem
+          }
+        }
+      };
+
       return {
         ...state,
+        ...mergedEntry
       };
     }
     default:
