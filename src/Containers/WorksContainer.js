@@ -1,7 +1,10 @@
 import R from "ramda";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getWorks, setEditing, setText } from "../redux/modules/state";
+import { getWorks,
+         setEditing,
+         setText,
+         stateToProps$ } from "../redux/modules/state";
 import { Table, Column, Cell } from "fixed-data-table";
 import { titleCase } from "change-case";
 import "../../node_modules/fixed-data-table/dist/fixed-data-table.css";
@@ -101,13 +104,6 @@ class Works extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    works: state.works.works,
-    editing: R.propOr([], 0, R.toPairs(state.works.editing))
-  };
-};
-
 const mapDispatchToProps = { getWorks, setEditing, setText };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Works);
+export default connect(stateToProps$, mapDispatchToProps)(Works);
