@@ -39,42 +39,52 @@ const initialState = {
 };
 
 export default function works(state = initialState, action) {
-  switch (action.type) {
-    case GET_WORKS:
-      return {
-        ...state,
-        appState: appState["loading"]
-      };
 
-    case WORKS_FETCH_FAILED: {
-      return {
-        ...state,
-        appState: appState["error"],
-        error: action.message
-      };
-    }
+  const isType = R.compose(R.always, R.equals(action.type))
 
-    case WORKS_FETCH_SUCCEEDED: {
-      return {
-        ...state,
-        appState: appState["info"],
-        error: "",
-        works: action.works
-      };
-    }
+  const getWorks = R.when(
+    isType(GET_WORKS),
+    R.merge(R.__, {
+      appState: "loading"
+    }))
 
-    case SET_EDITING: {
-      return {
-        ...state,
-        editing: action.editing
-      };
-    }
-    case SET_TEXT: {
+  const worksFetchFailed = R.when(
+    isType(WORKS_FETCH_FAILED),
+    R.merge(R.__, {
+      appState: "error",
+      error: action.message
+    }))
+
+  const worksFetchSucceeded = R.when(
+    isType(WORKS_FETCH_SUCCEEDED),
+    R.merge(R.__, {
+      appState: "info",
+      works: action.works
+    }))
+
+  const setEditing = R.when(
+    isType(SET_EDITING),
+    R.merge(R.__, {
+      editing: action.editing
+    }))
+
+  const setText = R.when(
+    isType(SET_TEXT),
+    state => {
       const { id, key, value } = action
       const worksItemLens = R.compose(worksLens, R.lensPath([id, key]));
       return R.set(worksItemLens, value, state);
     }
-    default:
-      return state;
-  }
+  )
+
+  const stateChanges = R.compose(
+    getWorks,
+    worksFetchFailed,
+    worksFetchSucceeded,
+    setEditing,
+    setText,
+  )
+
+  return stateChanges(state)
+
 }
