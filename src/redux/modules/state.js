@@ -1,5 +1,4 @@
 import R from "ramda";
-import createSelector from "ramda-reselect";
 export const GET_WORKS = "GET_WORKS";
 export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED";
 export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED";
@@ -27,21 +26,10 @@ export const setText = changedEntry => ({
   ...changedEntry,
 });
 
-// Selectors
-const works$ = state => state.works.works;
-const editing = state => state.works.editing;
-const editing$ = R.compose(R.propOr([], 0), R.toPairs, editing);
-const editingFn = R.compose(R.propOr([], 0), R.toPairs);
-
+// Lenses
 export const errorLens = R.lensProp('error')
 export const editingLens = R.lensProp('editing')
 export const worksLens = R.lensProp("works");
-
-export const stateToProps$ = createSelector(works$, editing$, (
-  works,
-  editing
-) => ({ works, editing }));
-
 
 const initialState = {
   appState: appState["none"],

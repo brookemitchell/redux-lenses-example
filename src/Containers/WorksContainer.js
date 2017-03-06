@@ -7,7 +7,6 @@ import { getWorks,
          errorLens,
          editingLens,
          worksLens,
-         stateToProps$
        } from "../redux/modules/state";
 import { Table, Column, Cell } from "fixed-data-table";
 import { titleCase } from "change-case";
@@ -108,13 +107,13 @@ class Works extends Component {
 }
 
 const prefixWorks = e => R.compose(R.lensProp('works'), e)
-const stateWide = R.map(
+const allViews = R.map(
   R.compose(R.view, prefixWorks),
   [errorLens, editingLens, worksLens])
 
 const mapStateLensToProps = R.compose(
   R.zipObj(['error', 'editing', 'works']),
-  R.ap(stateWide),
+  R.ap(allViews),
   R.of,
 )
 
