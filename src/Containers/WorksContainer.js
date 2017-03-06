@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import { getWorks,
          setEditing,
          setText,
-         stateToProps$ } from "../redux/modules/state";
+         errorLens,
+         editingLens,
+         worksLens,
+         stateToProps$
+       } from "../redux/modules/state";
 import { Table, Column, Cell } from "fixed-data-table";
 import { titleCase } from "change-case";
 import "../../node_modules/fixed-data-table/dist/fixed-data-table.css";
@@ -23,7 +27,7 @@ class Works extends Component {
 
   handleEditClick({ target }) {
     const [id, key] = target.className.split(" ");
-    this.props.setEditing({ [id]: key });
+    this.props.setEditing( [id, key ] );
   }
 
   handleTextChange({ target }) {
@@ -37,7 +41,7 @@ class Works extends Component {
   }
 
   handleTextSave({ target }) {
-    this.props.setEditing({});
+    this.props.setEditing([])
   }
 
   render() {
@@ -103,6 +107,17 @@ class Works extends Component {
   }
 }
 
+const prefixWorks = e => R.compose(R.lensProp('works'), e)
+const stateWide = R.map(
+  R.compose(R.view, prefixWorks),
+  [errorLens, editingLens, worksLens])
+
+const mapStateLensToProps = R.compose(
+  R.zipObj(['error', 'editing', 'works']),
+  R.ap(stateWide),
+  R.of,
+)
+
 const mapDispatchToProps = { getWorks, setEditing, setText };
 
-export default connect(stateToProps$, mapDispatchToProps)(Works);
+export default connect(mapStateLensToProps, mapDispatchToProps)(Works);

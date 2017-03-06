@@ -22,7 +22,7 @@ export const setEditing = editing => ({
   editing
 });
 
-export const setText = changedEntry => console.log(changedEntry) || ({
+export const setText = changedEntry => ({
   type: SET_TEXT,
   ...changedEntry,
 });
@@ -31,17 +31,23 @@ export const setText = changedEntry => console.log(changedEntry) || ({
 const works$ = state => state.works.works;
 const editing = state => state.works.editing;
 const editing$ = R.compose(R.propOr([], 0), R.toPairs, editing);
+const editingFn = R.compose(R.propOr([], 0), R.toPairs);
+
+export const errorLens = R.lensProp('error')
+export const editingLens = R.lensProp('editing')
+export const worksLens = R.lensProp("works");
 
 export const stateToProps$ = createSelector(works$, editing$, (
   works,
   editing
 ) => ({ works, editing }));
 
+
 const initialState = {
   appState: appState["none"],
   error: "",
   works: {},
-  editing: {}
+  editing: []
 };
 
 export default function works(state = initialState, action) {
@@ -70,7 +76,6 @@ export default function works(state = initialState, action) {
     }
 
     case SET_EDITING: {
-      console.log(action);
       return {
         ...state,
         editing: action.editing
@@ -78,7 +83,7 @@ export default function works(state = initialState, action) {
     }
     case SET_TEXT: {
       const { id, key, value } = action
-      const worksItemLens = R.lensPath(["works", id, key]);
+      const worksItemLens = R.compose(worksLens, R.lensPath([id, key]));
       return R.set(worksItemLens, value, state);
     }
     default:
