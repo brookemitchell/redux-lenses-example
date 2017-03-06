@@ -30,10 +30,9 @@ class Works extends Component {
     const [id, key] = target.className.split(" ");
     const newObjVals = {
       id,
-      [id]: {
-        [key]: target.value
-      }
-    };
+      key,
+      value: target.value,
+    }
     this.props.setText(newObjVals);
   }
 

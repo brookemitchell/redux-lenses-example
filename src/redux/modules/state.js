@@ -1,5 +1,5 @@
-import R from 'ramda'
-import createSelector from 'ramda-reselect'
+import R from "ramda";
+import createSelector from "ramda-reselect";
 export const GET_WORKS = "GET_WORKS";
 export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED";
 export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED";
@@ -22,10 +22,20 @@ export const setEditing = editing => ({
   editing
 });
 
-export const setText = changedEntry => ({
+export const setText = changedEntry => console.log(changedEntry) || ({
   type: SET_TEXT,
-  changedEntry
+  ...changedEntry,
 });
+
+// Selectors
+const works$ = state => state.works.works;
+const editing = state => state.works.editing;
+const editing$ = R.compose(R.propOr([], 0), R.toPairs, editing);
+
+export const stateToProps$ = createSelector(works$, editing$, (
+  works,
+  editing
+) => ({ works, editing }));
 
 const initialState = {
   appState: appState["none"],
@@ -60,45 +70,18 @@ export default function works(state = initialState, action) {
     }
 
     case SET_EDITING: {
+      console.log(action);
       return {
         ...state,
         editing: action.editing
       };
     }
     case SET_TEXT: {
-      const oldItem = state.works[action.changedEntry.id];
-      const newItem = action.changedEntry[action.changedEntry.id];
-
-      const mergedEntry = {
-        works: {
-          ...state.works,
-          [action.changedEntry.id]: {
-            ...oldItem,
-            ...newItem
-          }
-        }
-      };
-
-      return {
-        ...state,
-        ...mergedEntry
-      };
+      const { id, key, value } = action
+      const worksItemLens = R.lensPath(["works", id, key]);
+      return R.set(worksItemLens, value, state);
     }
     default:
       return state;
   }
 }
-
-// Selectors
-const works$ =  state => state.works.works
-const editing = state => state.works.editing
-const editing$ =  R.compose(
-  R.propOr([], 0),
-  R.toPairs,
-  editing)
-
-export const stateToProps$ = createSelector(
-  works$,
-  editing$,
-  (works, editing) => ({works, editing})
-)
