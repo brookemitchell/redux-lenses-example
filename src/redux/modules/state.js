@@ -1,4 +1,5 @@
 import R from 'ramda'
+import createSelector from 'ramda-reselect'
 export const GET_WORKS = "GET_WORKS";
 export const WORKS_FETCH_SUCCEEDED = "WORKS_FETCH_SUCCEEDED";
 export const WORKS_FETCH_FAILED = "WORKS_FETCH_FAILED";
@@ -91,15 +92,13 @@ export default function works(state = initialState, action) {
 // Selectors
 const works$ =  state => state.works.works
 const editing = state => state.works.editing
-const editing$ =  R.compose(R.propOr([], 0),
-                                   R.toPairs,
-                                   editing)
+const editing$ =  R.compose(
+  R.propOr([], 0),
+  R.toPairs,
+  editing)
 
-export const stateToProps$ = R.compose(
-  R.zipObj(['editing', 'works']),
-  R.ap([
-    editing$,
-    works$
-  ]),
-  R.of,
+export const stateToProps$ = createSelector(
+  works$,
+  editing$,
+  (works, editing) => ({works, editing})
 )

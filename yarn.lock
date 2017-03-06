@@ -4300,6 +4300,13 @@ railroad-diagrams@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/railroad-diagrams/-/railroad-diagrams-1.0.0.tgz#eb7e6267548ddedfb899c1b90e57374559cddb7e"
 
+ramda-reselect@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/ramda-reselect/-/ramda-reselect-1.2.0.tgz#4a41fa6b2d5fe1300fa190755cb6676963f5cd3b"
+  dependencies:
+    ramda "^0.23.0"
+    sanctuary "^0.12.1"
+
 ramda@^0.23.0:
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.23.0.tgz#ccd13fff73497a93974e3e86327bfd87bd6e8e2b"
@@ -4701,6 +4708,37 @@ run-async@^0.1.0:
 rx-lite@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/rx-lite/-/rx-lite-3.1.2.tgz#19ce502ca572665f3b647b10939f97fd1615f102"
+
+sanctuary-def@0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-def/-/sanctuary-def-0.9.0.tgz#a54bc330ec955d0ef47752317a01657db6d4760e"
+  dependencies:
+    sanctuary-type-classes "2.0.x"
+    sanctuary-type-identifiers "1.0.x"
+
+sanctuary-type-classes@2.0.x:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-classes/-/sanctuary-type-classes-2.0.1.tgz#06b6cfd78e3e8d85cd93f5c2d7b08796b68d1e74"
+  dependencies:
+    sanctuary-type-identifiers "1.0.x"
+
+sanctuary-type-classes@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-classes/-/sanctuary-type-classes-3.0.1.tgz#65163f8e1dfdfdc05cf842b83b608fff921cda15"
+  dependencies:
+    sanctuary-type-identifiers "1.0.x"
+
+sanctuary-type-identifiers@1.0.0, sanctuary-type-identifiers@1.0.x:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-identifiers/-/sanctuary-type-identifiers-1.0.0.tgz#e8f359f006cb5e624cfb8464603fc114608bde9f"
+
+sanctuary@^0.12.1:
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/sanctuary/-/sanctuary-0.12.2.tgz#70ae648aff04787b403402093caa963b873a4ea5"
+  dependencies:
+    sanctuary-def "0.9.0"
+    sanctuary-type-classes "3.0.1"
+    sanctuary-type-identifiers "1.0.0"
 
 sane@~1.4.1:
   version "1.4.1"

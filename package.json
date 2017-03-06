@@ -7,6 +7,7 @@
     "change-case": "^3.0.1",
     "fixed-data-table": "^0.6.3",
     "ramda": "^0.23.0",
+    "ramda-reselect": "^1.2.0",
     "react-redux": "^5.0.3",
     "react-scripts": "0.9.0",
     "redux": "^3.6.0",
