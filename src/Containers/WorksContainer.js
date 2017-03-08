@@ -44,7 +44,7 @@ class Works extends Component {
   }
 
   render() {
-    const entries = Object.values(this.props.works);
+    const entries = R.values(this.props.works);
 
     const cellCreator = key => props => {
       const index = props.rowIndex;
@@ -100,7 +100,7 @@ class Works extends Component {
         height={window.innerHeight}
         headerHeight={50}
       >
-        {Object.values(desc)}
+        {R.values(desc)}
       </Table>
     );
   }
